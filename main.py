@@ -4,15 +4,27 @@ import time
 # prueba de libreria time para medir los tiempos
 def time_tester():
     start_time = time.time()
-    time.sleep(1)
+    time.sleep() # se debe dejar sin argumentos para medir el tiempo real
     end_time = time.time()
-
-    print(f"Tiempo en generar los datos: {end_time - start_time} milisegundos")
+    sorting_time = end_time - start_time
+    return sorting_time
 
 # paso 2: implementar y probar los algoritmos de ordenamiento
-def bubble_sort():
+def bubble_sort(sys_data):
     """bubble data sorting"""
-    pass
+    stop = len(sys_data) - 1 # define el limite del recorrido
+
+    # controla las veces que recorre la lista
+    for _ in range(stop):
+        # compara los elementos y los intercambia
+        for j in range(stop):
+            if sys_data[j] > sys_data[j + 1]:
+                sys_data[j], sys_data[j + 1] = sys_data[j + 1], sys_data[j]
+    
+    print("Ordenamiento burbuja")
+    print("Tiempo de ordenamiento: ") # TODO: añadir la función de tiempo
+
+    return sys_data
 
 def selection_sort():
     """selection data sorting"""
@@ -42,15 +54,22 @@ def count_sort():
 def random_data():
     """Generar datos aleatorios"""
     # data generator
-    sys_data = [random.randint(-100000, 100000) for _ in range(10000)]
+    print("Lista de datos")
+    sys_data = [random.randint(-100000, 100000) for _ in range(10)] # se trabajará con 10 datos para verificar el ordenamiento, luego se ampliará a 10 000
     return sys_data
-    
+
+def execution_laps():
+    """Define la cantidad de veces que se debe ejecutar cada aloritmo"""
+    # se debe implementar la funciónde ejecutar el código 500 veces, empezar con 3 veces primero.
+    pass
+
 def main():
     print("")
     sys_data = random_data()
     print(sys_data)
     print("")
-    time_tester() #borrar ya que es una prueba
+    bubble_sort(sys_data)
+    print(sys_data)
 
 if __name__ == "__main__":
     main()
