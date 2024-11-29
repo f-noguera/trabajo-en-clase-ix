@@ -52,7 +52,7 @@ def selection_sort(sys_data):
     return sys_data
 
 def insertion_sort(sys_data):
-    """insertion data sorting"""
+    """insertion data sorting""" # a cargo de bismark
     print("")
 
     print("Algoritmo: Inserción")
@@ -61,7 +61,7 @@ def insertion_sort(sys_data):
     return sys_data
 
 def merge_sort():
-    """merge data sorting"""
+    """merge data sorting""" # a cargo de bismark
     pass
 
 def quick_sort():
@@ -72,14 +72,42 @@ def heap_sort():
     """heap data sorting"""
     pass
 
-def count_sort():
+def count_sort(sys_data):
     """count data sorting"""
-    pass
+    print("")
+    # obtener información sobre la lista
+    stop = len(sys_data)
+    max_number = max(sys_data)
+    min_number = min(sys_data)
 
-# paso 1: generar datos aleatotios para probar los algoritmos
+    # control de conteo
+    sys_data_stop = max_number + 1 - min_number
+    counting = [0] * sys_data_stop
+
+    # control de repetición del número
+    for number in sys_data:
+        counting[number - min_number] += 1
+
+    # suma cada posición con sus predecesores. Ahora, counting_arr[i] nos dice 
+    # cuántos elementos <= i hay en sys_data
+    for i in range(1, sys_data_stop):
+        counting[i] = counting[i] + counting[i - 1]
+
+    # lista ordenada
+    sorted = [0] * stop
+
+    # coloca los elementos en la salida, respetando el orden original (ordenamiento 
+    # estable) de final a inicio, actualizando counting_arr
+    for i in reversed(range(stop)):
+        sorted[counting[sys_data[i] - min_number] - 1] = sys_data[i]
+        counting[sys_data[i] - min_number] -= 1
+
+    print("Algoritmo: Conteo")
+    print("Tiempo: ") #TODO: añadir la función de tiempo
+    return sorted
+
 def random_data():
     """Generar datos aleatorios"""
-    # data generator
     print("")
     print("Lista de datos")
     sys_data = [random.randint(-100000, 100000) for _ in range(5)] # se trabajará con 10 datos para verificar el ordenamiento, luego se ampliará a 10 000
@@ -109,8 +137,16 @@ def main():
     print(selection_sorted)
 
     # ordenamiento por inserción
-    insertion_sorted = insertion_sort(sys_data[:])
-    print(insertion_sorted)
+
+    # ordenamiento por unión
+
+    # ordenamiento rápido
+
+    # ordenamiento por pila
+
+    # ordenamiento por conteo
+    count_sorted = count_sort(sys_data[:])
+    print(count_sorted)
 
 if __name__ == "__main__":
     main()
