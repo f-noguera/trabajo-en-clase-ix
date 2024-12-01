@@ -97,19 +97,61 @@ def merge_sort(sys_data, first_call=True):
 
     return merge(left_sorted, right_sorted)
 
-def quick_sort():
+def quick_sort(sys_data, first_call=True):
     """quick data sorting"""
-    print("")
+    if first_call:
+        print("")
+        print("Algoritmo: Quick Sort")
+        print("Tiempo: ")
+    
+    if len(sys_data) <= 1:
+        return sys_data
+    
+    # Elegir el pivote
+    pivot = sys_data[-1]
+    left = [x for x in sys_data[:-1] if x <= pivot]
+    right = [x for x in sys_data[:-1] if x > pivot]
 
-    print("Algoritmo: Quick Sort")
-    print("Tiempo: ") # TODO: añadir la función de tiempo
+    # Ordenar de forma recursiva y combinar
+    return quick_sort(left, False) + [pivot] + quick_sort(right, False)
 
-def heap_sort():
+def heap_sort(sys_data):
     """heap data sorting"""
     print("")
+    print("Algoritmo: Heap Sort")
+    print("Tiempo: ")
 
-    print("Algoritmo: Quick Sort")
-    print("Tiempo: ") # TODO: añadir la función de tiempo
+    def heapify(data, n, i):
+        """Convierte una parte del arreglo en un max-heap"""
+        largest = i  # Nodo raíz
+        left = 2 * i + 1  # Hijo izquierdo
+        right = 2 * i + 2  # Hijo derecho
+
+        # Si el hijo izquierdo es mayor que la raíz
+        if left < n and data[left] > data[largest]:
+            largest = left
+
+        # Si el hijo derecho es mayor que el mayor actual
+        if right < n and data[right] > data[largest]:
+            largest = right
+
+        # Si el mayor no es la raíz
+        if largest != i:
+            data[i], data[largest] = data[largest], data[i]  # Intercambio
+            heapify(data, n, largest)  # Heapificar la sub-árbol afectado
+
+    n = len(sys_data)
+
+    # Construir el max-heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(sys_data, n, i)
+
+    # Extraer elementos del heap uno por uno
+    for i in range(n - 1, 0, -1):
+        sys_data[i], sys_data[0] = sys_data[0], sys_data[i]  # Intercambio
+        heapify(sys_data, i, 0)
+
+    return sys_data
 
 def count_sort(sys_data):
     """count data sorting"""
@@ -141,7 +183,7 @@ def count_sort(sys_data):
         sys_data_sorted[counting[sys_data[i] - min_number] - 1] = sys_data[i]
         counting[sys_data[i] - min_number] -= 1
 
-    print("Algoritmo: Conteo")
+    print("Algoritmo: Counting Sort")
     print("Tiempo: ") #TODO: añadir la función de tiempo
     return sys_data_sorted
 
@@ -154,7 +196,7 @@ def random_data():
 
 def execution_laps():
     """Define la cantidad de veces que se debe ejecutar cada aloritmo"""
-    # se debe implementar la funciónde ejecutar el código 500 veces, empezar con 3 veces primero.
+    # se debe implementar la funciónde ejecutar el código 50 veces, empezar con 10 veces primero.
     pass
 
 def main():
@@ -184,8 +226,12 @@ def main():
     print(merge_sorted)
 
     # ordenamiento quick sort
+    quick_sorted = quick_sort(sys_data[:])
+    print(quick_sorted)
 
     # ordenamiento heap sort
+    heap_sorted = heap_sort(sys_data[:])
+    print(heap_sorted)
 
     # ordenamiento por conteo
     count_sorted = count_sort(sys_data[:])
